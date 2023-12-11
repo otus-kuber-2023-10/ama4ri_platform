@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: avtandilko/hipster-frontend:v0.0.2
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: "/_health"
+              port: 8080
+          env:
+            - name: PORT
+              value: "8080" 
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: "product-catalog:8080"
+            - name: CURRENCY_SERVICE_ADDR
+              value: "currency-service:8080"
+            - name: CART_SERVICE_ADDR
+              value: "carts-ervice:8080"
+            - name: RECOMMENDATION_SERVICE_ADDR
+              value: "recommendation-service:8080"
+            - name: CHECKOUT_SERVICE_ADDR
+              value: "checkout-service:8080" 
+            - name: SHIPPING_SERVICE_ADDR
+              value: "shipping-service:8080"
+            - name: AD_SERVICE_ADDR
+              value: "ad-service:8080"
