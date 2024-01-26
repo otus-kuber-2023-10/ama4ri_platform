@@ -1,0 +1,26 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+  name: dev:admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: namespace-admin
+subjects:
+- kind: ServiceAccount
+  name: jane
+  namespace: dev
+kind: RoleBinding
+metadata:
+  annotations:
+  name: dev:view
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: namespace-view
+subjects:
+- kind: ServiceAccount
+  name: ken
+  namespace: dev
+
